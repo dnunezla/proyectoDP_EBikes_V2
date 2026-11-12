@@ -26,7 +26,8 @@ public class EBCompany
         stations= new ArrayList<BikeStation> ();
         subscribedBikes= new ArrayList<ElectricBike> ();
     }
-     /**
+
+    /**
      * Adds an {@link ElectricBike} to the company's fleet.
      * @param bike The electric bike to add.
      */
@@ -34,37 +35,40 @@ public class EBCompany
         if(! subscribedBikes.isEmpty()){
             subscribedBikes.addFirst(eB);
         }else{
-             subscribedBikes.addLast(eB);
+            subscribedBikes.addLast(eB);
         }
-        
+
     }
+
     /**
      * Adds a {@link BikeStation} to the company's network.
      * @param station The bike station to add.
      */
     public void addBikeStation(BikeStation station){
         if(!stations.isEmpty()){
-           stations.addFirst(station);
+            stations.addFirst(station);
         }else{
             stations.addLast(station);
         }
-        
+
     }
+
     public String getName(){
         return name;
     }
-     /**
+
+    /**
      * Retrieves a {@link BikeStation} by its unique ID.
      * @param id The ID of the station to find.
      * @return The {@link BikeStation} with the matching ID, or {@code null} if not found.
      */
-   public BikeStation getBikeStation(String id)
+    public BikeStation getBikeStation(String id)
     {
         BikeStation foundStation= null;
         BikeStation station= null;
         int i=0;
-        while (i<this.stations.size() && foundStation==null) {
-            station = this.stations.get(i);
+        while (i<stations.size() && foundStation==null) {
+            station = stations.get(i);
             if (station.getId().equals(id)) {
                 foundStation= station;
             }
@@ -73,18 +77,19 @@ public class EBCompany
         return foundStation;
 
     }
-      /**
+
+    /**
      * Retrieves a {@link BikeStation} by its {@link Location}.
      * @param location The {@link Location} of the station to find.
      * @return The {@link BikeStation} at the matching location, or {@code null} if not found.
      */
-public BikeStation getBikeStation(Location location)
+    public BikeStation getBikeStation(Location location)
     {
         BikeStation foundStation= null;
-        BikeStation station= null;
+        BikeStation station=null;
         int i= 0;
-        while (i<this.stations.size() && foundStation==null) {
-            station= this.stations.get(i);
+        while (i<stations.size() && foundStation==null) {
+            station= stations.get(i);
             if (station.getLocation().equals(location)) {
                 foundStation= station;
             }
@@ -92,19 +97,20 @@ public BikeStation getBikeStation(Location location)
         }
         return foundStation;
     }
-      /**
+
+    /**
      * @return The total number of managed {@link BikeStation}s.
      */
     public int getNumberOfStations(){
-        int acum=0;
-        //TODO
-        return 0;
+        return stations.size();
     }
-     /**
+
+    /**
      * Clears all managed bikes and stations, resetting the company to an empty state.
      */
     public void reset(){
-        //todo
+        subscribedBikes.clear();
+        stations.clear();
     }
-       
+
 }
