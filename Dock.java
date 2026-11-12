@@ -131,7 +131,7 @@ public class Dock
      * @param bike The electric bike to add.
      */
     public void addBikeRecharged(ElectricBike bike) {
-        if (bike != null && !bikesRecharged.contains(bike)) {
+        if (bike!=null && !bikesRecharged.contains(bike)) {
             this.bikesRecharged.add(bike);
         }
     }

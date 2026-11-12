@@ -144,8 +144,7 @@ public class EBikeDemo
         }    
     }
     
-    
-     /**
+    /**
       * Instructs each {@link ElectricBike} to calculate its initial route.
       * This determines if an intermediate recharging stop is necessary.
       */
@@ -172,10 +171,10 @@ public class EBikeDemo
         System.out.println("( Bike Stations )");
         System.out.println("(-------------------)");
        
-        /*bikes.sort(new ComparatorBikeStationId());
+        stations.sort(new ComparatorBikeStationId());
         for(BikeStation station: stations){
              System.out.println(station);
-            }*/
+            }
 
         System.out.println("(------------------)");
         System.out.println("( Simulation start )");

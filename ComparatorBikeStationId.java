@@ -1,6 +1,4 @@
 import java.util.*; 
-import java.util.*; 
-
 /**
  * Compares two {@link BikeStation} objects based on their ID in ascending order.
  * This can be used for sorting lists of Bike stations.
@@ -22,19 +20,19 @@ public class ComparatorBikeStationId implements Comparator<BikeStation>
         int result=0;
         if (st1== st2) {
             result= 0;
-        } else if (st1== null) {
+        } else if (st1==null) {
             result= 1;
-        } else if (st2 == null) {
+        } else if (st2==null) {
             result= -1;
         } else {
-            String id1= st1.getId();
+            String id1=st1.getId();
             String id2=st2.getId();
             
             if (id1==id2) {
                 result= 0;
-            } else if (id1== null) {
+            } else if (id1==null) {
                 result=1;
-            } else if (id2== null) {
+            } else if (id2==null) {
                 result= -1;
             } else {
                 result=id1.compareTo(id2);

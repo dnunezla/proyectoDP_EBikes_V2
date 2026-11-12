@@ -53,13 +53,13 @@ import java.util.ArrayList;
         }
 
         this.company= company;
-        this.location =location;
-        this.targetLocation= targetLocation;
+        this.location=location;
+        this.targetLocation=targetLocation;
         this.id_eB= id;
-        this.batteryCapacity= batteryCapacity;
+        this.batteryCapacity=batteryCapacity;
         this.batteryLevel= batteryCapacity;
-        this.idleCount= 0;
-        this.wsCharged =0;
+        this.idleCount=0;
+        this.wsCharged=0;
         this.chargesCount= 0;
         this.chargesCost= 0;
         this.docksUsed=new ArrayList<Dock>();
@@ -150,7 +150,7 @@ import java.util.ArrayList;
      */
     public Location getTargetLocation()
     {
-        return this.targetLocation;
+        return targetLocation;
     }
 
     /**
@@ -159,8 +159,13 @@ import java.util.ArrayList;
      */
     public Location getRechargingLocation()
     {
-        //TODO: Complete this code
-        return null;
+        Location rechargingLoc = null;
+        if (company.getBikeStation(targetLocation)!= null) {
+            rechargingLoc= targetLocation;
+        }
+        return rechargingLoc;
+        
+        ///TODOOOOOOOOOOOO
     }
 
 
@@ -174,7 +179,7 @@ import java.util.ArrayList;
         if (location==null) {
             throw new NullPointerException("Location cannot be null");
         }
-        this.targetLocation= location;
+        targetLocation= location;
     }
 
     /**
@@ -195,8 +200,7 @@ import java.util.ArrayList;
      */
     public String getStringRoute()
     {
-       //TODO: Complete this code
-       return null;
+       return location+ " -> " +targetLocation;
     }
 
     /**
