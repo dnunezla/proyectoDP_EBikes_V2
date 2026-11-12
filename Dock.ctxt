@@ -1,0 +1,35 @@
+#BlueJ class context
+#Thu Nov 12 10:01:41 CET 2026
+comment0.target=Dock
+comment0.text=\r\n Model a dock unit within a {@link BikeStation}.\r\n It tracks its charging capabilities, fee, and the electric bikes it has recharged.\r\n @author David J. Barnes and Michael K\u00F6lling\r\n @author DP classes \r\n @version 2026.10.13\r\n
+comment1.params=id speed fee
+comment1.target=Dock(java.lang.String, int, float)
+comment1.text=\r\n Constructor for objects of class Dock.\r\n //TODO complete the JavaDoc comments\r\n
+comment10.target=boolean isFree()
+comment10.text=\r\n Checks if the dock is free.\r\n @return true if free, if not false .\r\n
+comment11.params=free
+comment11.target=void setFree(boolean)
+comment11.text=\r\n Sets the availability status of the dock.\r\n @param free The new free status.\r\n
+comment12.params=bike
+comment12.target=void addBikeRecharged(ElectricBike)
+comment12.text=\r\n Adds an electric bike to the list of recharged bikes if it is not null.\r\n @param bike The electric bike to add.\r\n
+comment13.params=amount
+comment13.target=void updateAmountCollected(float)
+comment2.target=java.lang.String toString()
+comment2.text=\r\n Returns a string representation of the dock, including its ID, speed, fee, and the number of EVs recharged.\r\n @return A string representation of the dock.\r\n
+comment3.target=int getNumerEBRecharged()
+comment3.text=\r\n @return The total number of {@link ElectricBike}s that have been recharged by this dock.\r\n
+comment4.params=bike
+comment4.target=float recharge(ElectricBike)
+comment4.text=\r\n Simulates the charging process for an {@link ElectricBike}.\r\n Increases the amount collected and registers the bike as recharged.\r\n @return The cost of the recharge.\r\n @param bike The electric bike to recharge.\r\n
+comment5.target=java.lang.String getIdDock()
+comment5.text=\r\n @return The identifier of the dock.\r\n
+comment6.target=int getChargingSpeed()
+comment6.text=\r\n @return The charging speed of the dock.\r\n
+comment7.target=float getChargingFee()
+comment7.text=\r\n @return The fee for recharging.\r\n
+comment8.target=java.util.List getBikesRecharged()
+comment8.text=\r\n @return The list of recharged bikes.\r\n
+comment9.target=float getAmountCollected()
+comment9.text=\r\n @return The total amount collected.\r\n
+numComments=14
