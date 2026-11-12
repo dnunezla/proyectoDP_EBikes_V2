@@ -58,20 +58,39 @@ public class EBCompany
      * @param id The ID of the station to find.
      * @return The {@link BikeStation} with the matching ID, or {@code null} if not found.
      */
-    public BikeStation getBikeStation(String id)
+   public BikeStation getBikeStation(String id)
     {
-        //TODO: Complete this code
-        return null;
+        BikeStation foundStation= null;
+        BikeStation station= null;
+        int i=0;
+        while (i<this.stations.size() && foundStation==null) {
+            station = this.stations.get(i);
+            if (station.getId().equals(id)) {
+                foundStation= station;
+            }
+            i++;
+        } 
+        return foundStation;
+
     }
       /**
      * Retrieves a {@link BikeStation} by its {@link Location}.
      * @param location The {@link Location} of the station to find.
      * @return The {@link BikeStation} at the matching location, or {@code null} if not found.
      */
-    public BikeStation getBikeStation(Location location)
+public BikeStation getBikeStation(Location location)
     {
-        //TODO: Complete this code
-        return null;
+        BikeStation foundStation= null;
+        BikeStation station= null;
+        int i= 0;
+        while (i<this.stations.size() && foundStation==null) {
+            station= this.stations.get(i);
+            if (station.getLocation().equals(location)) {
+                foundStation= station;
+            }
+            i++;
+        }
+        return foundStation;
     }
       /**
      * @return The total number of managed {@link BikeStation}s.
