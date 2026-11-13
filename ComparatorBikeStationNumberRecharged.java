@@ -8,9 +8,8 @@ import java.util.*;
     public class ComparatorBikeStationNumberRecharged implements Comparator<BikeStation>
 {
     public int compare(BikeStation s1, BikeStation s2) {
-        int result=0;
-        /*int result= s1.getTotalBikesRecharged().compareTo(s2.getTotalBikesRecharged());*/
-        if (result==0) {
+        int result= s1.getNumberEBRecharged()-s2.getNumberEBRecharged();
+         if (result==0) {
             result=s1.getId().compareTo(s2.getId());
         }
         return result;

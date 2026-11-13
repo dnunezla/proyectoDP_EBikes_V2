@@ -48,7 +48,8 @@ public class Dock
     @Override
     public String toString()
     {
-        String result="Dock " + idDock + " [speed=" + chargingSpeed + ", fee=" + chargingFee + ", free=" + free + "]";
+        String result="(Dock: " + idDock + ", " + chargingSpeed + "wh, " + 
+        chargingFee + "€, " +getNumberEBRecharged()+ ", "+ getAmountCollected();
         return result;
     }    
 

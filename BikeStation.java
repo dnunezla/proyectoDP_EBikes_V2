@@ -51,9 +51,10 @@ import java.util.stream.Collectors;
     public Dock getFreeDock()
     {   
         Dock freeDock=null;
+        Dock currentDock=null;
         int i=0;
         while (i<docks.size() && freeDock== null) {
-            Dock currentDock = docks.get(i);
+            currentDock= docks.get(i);
             if (currentDock.isFree()) {
                 freeDock= currentDock;
             }
@@ -106,7 +107,17 @@ import java.util.stream.Collectors;
 
     @Override
     public String toString() {
-        String result = "Station " + idStation + " in " + location;
+        String result = "(BikeStation: " + idStation + ", " + getNumberEBRecharged() + ", " + location + ")";
+        Dock dock= null;
+        ElectricBike eb= null;
+        for (int i= 0; i < docks.size(); i++){
+            dock= docks.get(i);
+            result= result +"\n"+ dock.toString();
+            for (int j= 0; j < dock.getBikesRecharged().size(); j++) {
+                eb= dock.getBikesRecharged().get(j);
+                result= result +"\n"+ eb.toString();
+            }
+        }
         return result;
     }
     @Override

@@ -6,7 +6,7 @@ import java.util.*;
  * @author DP Clasess
  * @version 2026.10.13
  */
-public class ComparatorDocksId implements Comparator<Dock>
+public class ComparatorDocks implements Comparator<Dock>
 {
     /**
      * Compares its two {@link Dock} arguments for order.
@@ -16,7 +16,14 @@ public class ComparatorDocksId implements Comparator<Dock>
      * @return A negative integer, zero, or a positive integer as the first 
      * dock's ID is lexicographically less than, equal to, or greater than the second.
      */
-    public int compare(Dock c1, Dock c2){  
-        return c1.getIdDock().compareTo(c2.getIdDock());  
+    public int compare(Dock d1, Dock d2){  
+        int result= d2.getChargingSpeed()-d1.getChargingSpeed();
+        if (result==0) {
+            result = Float.compare(d1.getChargingFee(), d2.getChargingFee());
+            if (result == 0) {
+                result = d1.getIdDock().compareTo(d2.getIdDock());
+            }
+        }
+        return result; 
     } 
 }

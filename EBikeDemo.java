@@ -66,10 +66,10 @@ public class EBikeDemo
         for(int step = 0; step < MAXSTEPS; step++) {
             step(step);
         }
-        showInitialInfo();
+        showFinalInfo();
     }
 
-    /**
+     /**
      * Run the demo for one step by requesting all bikes to act.
      * @param step The current step number of the simulation.
      */
@@ -110,8 +110,15 @@ public class EBikeDemo
                                         new Location(1,10), new Location(5,5), new Location(8,7), new Location(19,19)};
                                         
         //createLocations(locations,targetLocations);
+        ElectricBike eb=null;
+        String idBike="";
         for (int i=0;i < DEMO.getNumBikesToCreate();i++){
-            ElectricBike eb = new ElectricBike(company, locations[i],targetLocations[i],("EBCC"+i),(i+1)*15);
+            if(i<10){
+                idBike="EBCC0"+i;
+            }else{
+                idBike="EBCC"+i;
+            }
+            eb = new ElectricBike(company, locations[i],targetLocations[i],idBike,(i+1)*15);
             bikes.add(eb);
             company.addElectricBike(eb);
         }
@@ -126,7 +133,7 @@ public class EBikeDemo
      */
     private void createStations() {  
         Location [] locations = {new Location(10,5), new Location(10,11), new Location(14,16), new Location(8,4)};
-                                
+                          
         for (int i=0;i<DEMO.getNumStationsToCreate();i++){
             company.addBikeStation(new BikeStation("CC0" + i,locations[i]));
             stations.add(company.getBikeStation("CC0" + i));
@@ -139,14 +146,20 @@ public class EBikeDemo
      * and orders the Docks within each station.
      */
     private void createDocks() {  
-        // TODO: Complete the code here
+        Dock dock=null;
+        String idDock="";
         for (BikeStation station : stations){
             for (int i=0;i<DEMO.getNumDocksToCreate();i++){
-                // Creates Docks with varying speed and fee based on index 'i'.
-                Dock d = new Dock(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f));
-                station.addDock(new Dock(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f)));
+                if(i<10){
+                idDock=station.getId()+"_0"+i;
+            }else{
+                idDock=station.getId()+"_"+i;
             }
-            station.getDocks().sort(new ComparatorDocksId());
+                // Creates Docks with varying speed and fee based on index 'i'.
+                dock= new Dock(idDock,((i+1)*20),((i+1)*0.20f));
+                station.addDock(dock);
+            }
+            station.getDocks().sort(new ComparatorDocks());
         }    
     }
     
