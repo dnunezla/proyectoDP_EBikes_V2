@@ -16,8 +16,9 @@ public class ComparatorEBIdBike implements Comparator<ElectricBike>
      * @return A negative integer, zero, or a positive integer as the first
      * bike's plate is less than, equal to, or greater than the second.
      */
-    public int compare(ElectricBike eb1, ElectricBike eb2){  
-          int result= 0;
+    public int compare(ElectricBike eb1, ElectricBike eb2){ 
+        return eb1.getId_eB().compareTo(eb2.getId_eB());
+        /*  int result= 0;
         if (eb1== eb2) {
             result= 0;
         } else if (eb1== null) {
@@ -38,6 +39,7 @@ public class ComparatorEBIdBike implements Comparator<ElectricBike>
                 result= id1.compareTo(id2);
             }
         }
-        return result;
+        return result;*/
+
     }
  }

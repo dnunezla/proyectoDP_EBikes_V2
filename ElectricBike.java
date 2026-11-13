@@ -16,6 +16,7 @@ import java.util.ArrayList;
     private EBCompany company;
     private Location location;
     private Location targetLocation;
+    private Location rechargingLocation;
     private int idleCount;
     private int batteryCapacity;
     private int batteryLevel;
@@ -55,6 +56,7 @@ import java.util.ArrayList;
         this.company= company;
         this.location=location;
         this.targetLocation=targetLocation;
+        this.rechargingLocation= null;
         this.id_eB= id;
         this.batteryCapacity=batteryCapacity;
         this.batteryLevel= batteryCapacity;
@@ -119,9 +121,17 @@ import java.util.ArrayList;
     public float getChargesCost(){
         return chargesCost;
     }
-    /*public ArrayList<Dock> getDocksUsed(){
-        return docksUsed;
-    }*/
+    /**
+     * @return The simulation step in which the bike arrived at its target location.
+     */
+     public Integer getArrivingStep()
+    {
+        int step= EBikeDemo.MAXSTEPS;
+        if(location.equals(targetLocation)){
+            step= (EBikeDemo.MAXSTEPS-1)- idleCount;
+        }
+        return step;
+    }
     public String locationToString(){
         return location+", "+"0-0"/*Hay que cambiarlo*/+", "+ targetLocation;
     }
@@ -159,13 +169,7 @@ import java.util.ArrayList;
      */
     public Location getRechargingLocation()
     {
-        Location rechargingLoc = null;
-        if (company.getBikeStation(targetLocation)!= null) {
-            rechargingLoc= targetLocation;
-        }
-        return rechargingLoc;
-        
-        ///TODOOOOOOOOOOOO
+        return rechargingLocation;
     }
 
 
@@ -189,6 +193,7 @@ import java.util.ArrayList;
      */
     public void calculateRoute()
     {
+        rechargingLocation=null;
         if (!enoughBattery(targetLocation)) {
             calculateRechargingPosition();
         }
@@ -227,9 +232,9 @@ import java.util.ArrayList;
      */
     public void calculateRechargingPosition()
     {
-        Location auxLocation = null;
-        int maxDist = batteryLevel / EBCompany.MOVINGCOST;
-        int minTotalDistance = maxDist;
+        Location result=null;
+        int maxDist=batteryLevel / EBCompany.MOVINGCOST;
+        int minTotalDistance=maxDist;
 
         int startX= 0;
         if (location.getX()- maxDist>0) {
@@ -253,21 +258,17 @@ import java.util.ArrayList;
         for (int x = startX; x<=endX; x++) {
             for (int y = startY; y<=endY; y++) {
                 loc = new Location(x, y);
-                if (company.getBikeStation(loc)!= null && enoughBattery(loc)) {
+                if (company.getBikeStation(loc)!= null && !loc.equals(location) && enoughBattery(loc)) {
                     int totalDist=location.distance(loc)+ loc.distance(targetLocation);
-                    if (auxLocation== null || totalDist< minTotalDistance) {
-                        auxLocation= loc;
+                    if (result == null || totalDist< minTotalDistance) {
+                        result= loc;
                         minTotalDistance= totalDist;
                     }
                 }
             }
         }
-
-        if (auxLocation!= null) {
-            targetLocation= auxLocation;
-        } else {
-            targetLocation =location;
-        }
+    
+      rechargingLocation= result;
     }
 
     /**
@@ -291,15 +292,15 @@ import java.util.ArrayList;
             Dock freeDock=station.getFreeDock();
             if (freeDock!=null) {
                 int neededWh= batteryCapacity-batteryLevel;
-                batteryLevel= batteryCapacity;
+                float cost= freeDock.recharge(this);
+                
+                batteryLevel=batteryCapacity;
                 wsCharged= wsCharged+neededWh;
                 incrementCharges();
-                
-                float cost= neededWh*freeDock.getChargingFee();
                 incrementChargesCost(cost);
-                
-                freeDock.recharge(this);
                 docksUsed.add(freeDock);
+                
+                calculateRoute();
             }
         }
         
@@ -330,17 +331,23 @@ import java.util.ArrayList;
      */
     public void act()
     {
-       if (location.equals(targetLocation)) {
-            BikeStation currentStation=company.getBikeStation(location);
-            if (currentStation!=null) {
-                recharge();
-            }else{
-                idleCount++;
-            }
+        if (location.equals(targetLocation)) {
+            idleCount++;
+        } else if (rechargingLocation==null && !enoughBattery(targetLocation)) {
+            idleCount++;
         } else {
-            Location nextStep=location.nextLocation(targetLocation);
-            location= nextStep;
+            Location destination=targetLocation;
+            if (rechargingLocation!=null) {
+                destination= rechargingLocation;
+            }
+
+            Location nextStep=location.nextLocation(destination);
+            location=nextStep;
             reduceBatteryLevel();
+
+            if (rechargingLocation!=null && location.equals(rechargingLocation)) {
+                recharge();
+            }
         }
     }
 
@@ -356,6 +363,19 @@ import java.util.ArrayList;
             batteryLevel=0;
         }
     }
+    @Override
+    public boolean equals(Object obj)
+    {
+        boolean result=false;
+        if (this==obj) {
+            result=true;
+        } else if (obj!=null && getClass()==obj.getClass()) {
+            ElectricBike other=(ElectricBike) obj;
+            result=id_eB.equals(other.getId_eB());
+        }
+        return result;
+    }
+    
 
    
 }

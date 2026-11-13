@@ -32,10 +32,10 @@ public class EBCompany
      * @param bike The electric bike to add.
      */
     public void addElectricBike(ElectricBike eB){
-        if(! subscribedBikes.isEmpty()){
-            subscribedBikes.addFirst(eB);
-        }else{
-            subscribedBikes.addLast(eB);
+        if(eB==null){
+             throw new IllegalArgumentException("ElectricBike cannot be null");
+        }else if (!subscribedBikes.contains(eB)){
+            subscribedBikes.add(eB);
         }
 
     }
@@ -45,10 +45,10 @@ public class EBCompany
      * @param station The bike station to add.
      */
     public void addBikeStation(BikeStation station){
-        if(!stations.isEmpty()){
-            stations.addFirst(station);
-        }else{
-            stations.addLast(station);
+        if(station==null){
+             throw new IllegalArgumentException("Station cannot be null");
+        }else if (!stations.contains(station)){
+            stations.add(station);
         }
 
     }

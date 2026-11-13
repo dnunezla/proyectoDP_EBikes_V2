@@ -109,4 +109,35 @@ import java.util.stream.Collectors;
         String result = "Station " + idStation + " in " + location;
         return result;
     }
+    @Override
+    public boolean equals(Object obj)
+    {
+        boolean equal=false;
+        if (this==obj) {
+            equal=true;
+        } 
+        else {
+            if (obj!=null && getClass()==obj.getClass()) {
+                BikeStation other=(BikeStation) obj;
+                if(idStation.equals(other.idStation) && location.equals(other.location)) {
+                    equal=true;
+                }
+            }
+        }
+        return equal;
+    }
+    /**    
+    *@return The total number of electric bikes recharged across 
+    *all docks in this station.
+    */
+    public int getNumberEBRecharged(){
+        int total=0;
+        Dock dock=null;
+        int i=0;
+        for(i=0; i<docks.size();i++){
+            dock= docks.get(i);
+            total= total+dock.getNumberEBRecharged();
+        }
+        return total;
+    }
 }

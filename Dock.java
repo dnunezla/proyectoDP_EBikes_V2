@@ -55,7 +55,7 @@ public class Dock
     /**
      * @return The total number of {@link ElectricBike}s that have been recharged by this dock.
      */
-    public int getNumerEBRecharged(){
+    public int getNumberEBRecharged(){
        int result=0;
        if (bikesRecharged!= null) {
             result=bikesRecharged.size();
@@ -70,17 +70,19 @@ public class Dock
      * @param bike The electric bike to recharge.
      */
     public float recharge(ElectricBike bike){
-        float result=0;
-        if (bike== null) {
+        float cost = 0;
+        if (bike==null) {
             throw new IllegalArgumentException("ElectricBike cannot be null");
         }
         if (!bikesRecharged.contains(bike)) {
-            bikesRecharged.add(bike);
+              addBikeRecharged(bike);
         }
-        free= false;
-        result=chargingFee;
-        amountCollected= amountCollected+result;
-        return result;
+        int whToCharge= bike.getBatteryCapacity()- bike.getBatteryLevel();
+        if(whToCharge>0) {
+        cost= whToCharge*chargingFee;
+        updateAmountCollected(cost);
+        }
+        return cost;
     }
     /**
      * @return The identifier of the dock.

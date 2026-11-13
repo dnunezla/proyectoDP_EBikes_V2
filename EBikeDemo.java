@@ -48,7 +48,10 @@ public class EBikeDemo
      */
     public EBikeDemo()
     {
-        //TODO: Complete this code
+        this.company=new EBCompany("Cáceres eBikes");
+        this.bikes=new ArrayList<ElectricBike>();
+        this.stations=new ArrayList<BikeStation>();
+        reset();
 
     }
 
@@ -63,7 +66,7 @@ public class EBikeDemo
         for(int step = 0; step < MAXSTEPS; step++) {
             step(step);
         }
-        //TODO: Complete this code (show the final info)
+        showInitialInfo();
     }
 
     /**
@@ -72,7 +75,9 @@ public class EBikeDemo
      */
     public void step(int step)
     {
-        //TODO: Complete this code: for each bike, act
+        for (ElectricBike bike: bikes) {
+            bike.act();
+        }
     }
 
     /**
@@ -89,7 +94,7 @@ public class EBikeDemo
         createStations(); 
         createDocks();
         configureRoutes();
-        // TODO: Complete the code here: show the initial info
+        showInitialInfo();
     }
 
     
@@ -107,9 +112,10 @@ public class EBikeDemo
         //createLocations(locations,targetLocations);
         for (int i=0;i < DEMO.getNumBikesToCreate();i++){
             ElectricBike eb = new ElectricBike(company, locations[i],targetLocations[i],("EBCC"+i),(i+1)*15);
-            // TODO: Complete the code here
+            bikes.add(eb);
+            company.addElectricBike(eb);
         }
-        // TODO: Complete the code here
+        bikes.sort(new ComparatorEBIdBike());
 
     }
     
@@ -123,9 +129,9 @@ public class EBikeDemo
                                 
         for (int i=0;i<DEMO.getNumStationsToCreate();i++){
             company.addBikeStation(new BikeStation("CC0" + i,locations[i]));
+            stations.add(company.getBikeStation("CC0" + i));
         }
-        
-        // TODO: Complete the code here
+        stations.sort(new ComparatorBikeStationId());
     }
 
     /**
@@ -140,7 +146,7 @@ public class EBikeDemo
                 Dock d = new Dock(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f));
                 station.addDock(new Dock(station.getId() + "_00" + i,((i+1)*20),((i+1)*0.20f)));
             }
-            // TODO: Complete the code here
+            station.getDocks().sort(new ComparatorDocksId());
         }    
     }
     
@@ -149,7 +155,9 @@ public class EBikeDemo
       * This determines if an intermediate recharging stop is necessary.
       */
      private void configureRoutes() {
-        // TODO: Complete the code here
+        for (ElectricBike bike : bikes){
+            bike.calculateRoute();
+        }
 
      }
 
@@ -196,13 +204,19 @@ public class EBikeDemo
         System.out.println("( Electric Bikes )");
         System.out.println("(-------------------)");
         
-        // TODO: Complete the code here
+        bikes.sort(new ComparatorEBArrivingStep());
+        for (ElectricBike bike: bikes){
+            System.out.println(bike);
+        }
         
         System.out.println("(-------------------)");
         System.out.println("( Bike Stations )");
         System.out.println("(-------------------)");
         
-        // TODO: Complete the code here
+        stations.sort(new ComparatorBikeStationNumberRecharged());
+        for (BikeStation station: stations){
+            System.out.println(station);
+        }
     }
     
     
